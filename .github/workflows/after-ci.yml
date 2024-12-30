@@ -11,4 +11,4 @@ jobs:
     steps:
       - name: AfterCI
         run: |
-          echo "START"
+          echo "START CI"
