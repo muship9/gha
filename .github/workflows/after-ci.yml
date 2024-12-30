@@ -1,0 +1,14 @@
+name: AfterPullRequest
+
+on:
+  check_suite:
+    types: [completed]
+
+jobs:
+  log_job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: AfterCI
+        run: |
+          echo "START"
