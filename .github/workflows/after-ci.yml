@@ -2,7 +2,7 @@ name: AfterPullRequest
 
 on:
   check_suite:
-    types: [completed]
+    types: [requested]
 
 jobs:
   check_suite:
