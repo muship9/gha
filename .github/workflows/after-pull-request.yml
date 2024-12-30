@@ -11,32 +11,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check workflow statuses
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          PR_NUMBER=$(gh api ${{ github.event.workflow_run.pull_requests[0].url }} --jq .number)
-          
-          # 両方のワークフローの最新の実行状態を取得
-          workflow1_status=$(gh api /repos/${{ github.repository }}/actions/workflows/workflow.yml/runs \
-            --jq ".workflow_runs[] | select(.pull_requests[].number==$PR_NUMBER) | .conclusion" | head -n1)
-          
-          workflow2_status=$(gh api /repos/${{ github.repository }}/actions/workflows/pullrequest.yml/runs \
-            --jq ".workflow_runs[] | select(.pull_requests[].number==$PR_NUMBER) | .conclusion" | head -n1)
-          
-          echo "Workflow status: $workflow1_status"
-          echo "PullRequest status: $workflow2_status"
-          
-          # 両方のワークフローが成功している場合のみ次のステップを実行
-          if [ "$workflow1_status" = "success" ] && [ "$workflow2_status" = "success" ]; then
-            echo "Both workflows succeeded"
-            echo "WORKFLOWS_SUCCEEDED=true" >> $GITHUB_ENV
-          else
-            echo "Not all workflows have succeeded yet"
-            echo "WORKFLOWS_SUCCEEDED=false" >> $GITHUB_ENV
-          fi
-
-      - name: Run after successful workflows
-        if: env.WORKFLOWS_SUCCEEDED == 'true'
-        run: |
-          echo "Starting after-workflow process..."
-          # ここに両方のワークフローが成功した後に実行したい処理を書く
+         echo "START" 
