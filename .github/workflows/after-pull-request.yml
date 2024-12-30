@@ -2,7 +2,7 @@
 name: AfterPullRequest
 on:
   workflow_run:
-    workflows: ["Workflow", "PullRequest"]
+    workflows: [Workflow, PullRequest]
     types:
       - completed
 
