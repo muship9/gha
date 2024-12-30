@@ -1,18 +1,15 @@
 name: AfterPullRequest
+
 on:
   check_run:
     types: [completed]
-    branches:
-      - 'feature/*'
-  status:
-    types: [success]
-    branches:
-      - 'feature/*'
 
 jobs:
-  check_all_workflows:
+  after-pull-request:
     runs-on: ubuntu-latest
     steps:
-      - name: Check workflow statuses
+      - name: AfterPullRequest
         run: |
-         echo "START" 
+          echo "START"
+
+
