@@ -1,10 +1,13 @@
-# .github/workflows/after-pullrequest.yml
 name: AfterPullRequest
 on:
-  workflow_run:
-    workflows: [Workflow, PullRequest]
-    types:
-      - completed
+  check_run:
+    types: [completed]
+    branches:
+      - 'feature/*'
+  status:
+    types: [success]
+    branches:
+      - 'feature/*'
 
 jobs:
   check_all_workflows:
