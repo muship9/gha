@@ -1,8 +1,7 @@
 name: AfterPullRequest
 
 on:
-  check_run:
-    types: [completed]
+  status
 
 jobs:
   after-pull-request:
