@@ -1,8 +1,10 @@
 name: AfterPullRequest
 
 on:
-  check_suite:
-    types: [requested]
+  check_run:
+    types: [completed]
+  # status:
+  #   types: [success]
 
 jobs:
   check_suite:
