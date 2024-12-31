@@ -1,0 +1,27 @@
+name: AfterPullRequest
+on:
+  pull_request:
+    branches:
+      - develop
+      - main
+
+jobs:
+  after-pull-request:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Auto approve and merge
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          echo "PR Number: $PR_NUMBER"
+          echo "Base branch: ${{ github.event.pull_request.base.ref }}"
+          
+          # PRの承認とマージ
+          gh pr review "$PR_NUMBER" --approve
+          gh pr merge "$PR_NUMBER" --squash --auto
