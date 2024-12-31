@@ -1,14 +1,22 @@
 name: AfterPullRequest
 
 on:
-  status
+  pull_request:
+    branches:
+      - develop
 
 jobs:
   after-pull-request:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - name: AfterPullRequest
-        run: |
-          echo "START"
+      - uses: actions/checkout@v4
+      - run: | 
+          gh pr review "${GITHUB_HEAD_REF}" --approve
+          gh pr merge "${GITHUB_HEAD_REF}" --squash --auto
 
 
