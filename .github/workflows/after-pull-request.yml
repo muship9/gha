@@ -16,7 +16,7 @@ jobs:
       
       - name: Auto approve and merge
         env:
-          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
           # デバッグ情報の出力
