@@ -1,5 +1,4 @@
 name: AfterPullRequest
-
 on:
   pull_request:
     branches:
@@ -12,12 +11,20 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-    env:
-      GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
     steps:
       - uses: actions/checkout@v4
-      - run: | 
-          gh pr review "${GITHUB_HEAD_REF}" --approve
-          gh pr merge "${GITHUB_HEAD_REF}" --squash --auto
-
-
+      
+      - name: Auto approve and merge
+        env:
+          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          # デバッグ情報の出力
+          echo "PR Number: $PR_NUMBER"
+          echo "Base branch: ${{ github.event.pull_request.base.ref }}"
+          
+          # PRの承認
+          gh pr review "$PR_NUMBER" --approve
+          
+          # PRのマージ
+          gh pr merge "$PR_NUMBER" --squash --auto
