@@ -16,15 +16,12 @@ jobs:
       
       - name: Auto approve and merge
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}  # Personal Access Token を使用
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
-          # デバッグ情報の出力
           echo "PR Number: $PR_NUMBER"
           echo "Base branch: ${{ github.event.pull_request.base.ref }}"
           
-          # PRの承認
+          # PRの承認とマージ
           gh pr review "$PR_NUMBER" --approve
-          
-          # PRのマージ
           gh pr merge "$PR_NUMBER" --squash --auto
