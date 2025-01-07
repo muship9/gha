@@ -12,9 +12,22 @@ jobs:
       contents: write
       pull-requests: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4s
+      - name: Check Labels
+        id: check-labels
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          LABELS=$(gh pr view $PR_NUMBER --json labels --jq '.labels[].name')
+          if echo "$LABELS" | grep -q "auto-merge"; then
+            echo "has-auto-merge-label=true" >> $GITHUB_OUTPUT
+          else
+            echo "has-auto-merge-label=false" >> $GITHUB_OUTPUT
+          fi
       
       - name: Auto approve and merge
+        if: :steps.has-auto-merge-label == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
