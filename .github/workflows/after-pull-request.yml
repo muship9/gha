@@ -25,6 +25,7 @@ jobs:
             echo "has-auto-merge-label=true" >> $GITHUB_OUTPUT
           else
             echo "has-auto-merge-label=false" >> $GITHUB_OUTPUT
+            echo "hoge"
           fi
 
       - name: Auto approve and merge
